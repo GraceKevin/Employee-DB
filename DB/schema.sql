@@ -8,6 +8,15 @@ CREATE TABLE employee (
     last_name VARCHAR(30) NOT NULL,
     roles_id INTEGER NOT NULL,
     manager_id INTEGER 
+    CONSTRAINT fk_roles 
+        FOREIGN KEY (roles_id) 
+        REFERENCES roles(id)
+        ON DELETE SET NULL,
+    CONSTRAINT fk_manager
+        UNIQUE (manager_id),
+    CONSTRAINT fk_manager
+        FOREIGN KEY (manager_id)
+        REFERENCES employee(id)
 
 );
 
@@ -20,7 +29,7 @@ CREATE TABLE department (
 CREATE TABLE roles (
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(30) NOT NULL,
-    salary ,
+    salary DECIMAL NOT NULL,
     department_id INTEGER,
     CONSTRAINT fk_department
         FOREIGN KEY (department_id)

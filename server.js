@@ -1,10 +1,22 @@
 const express = require('express');
+const inquirer = require('inquirer');
 const db = require('./db/connection');
 // update routes
 //const apiRoutes = require('./routes/apiRoutes');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
+
+const questions = [
+    {
+        type: 'input',
+        name: 'title',
+        message: 'Employees testing'
+    }
+];
+
+inquirer.prompt (questions)
+    .then (answers => {answers})
 
 // Express middleware
 app.use(express.urlencoded({ extended: false }));
