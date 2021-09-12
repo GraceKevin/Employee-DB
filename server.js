@@ -32,7 +32,8 @@ const questions =  () => {
                 'add department',
                 'add role',
                 'add employee',
-                'update employee role'
+                'update employee role',
+                'end'
             ]
         }])
         .then((userInput) => {
@@ -63,7 +64,11 @@ const questions =  () => {
             }
             // update  employee
             if (options === 'update employee role'){
-                updateEmployee();
+                updateRole();
+            }
+            // End Application
+            if (options === 'end')  {
+                connection.end();
             }
         });
 };
@@ -241,7 +246,7 @@ const addEmployee = () => {
           }
         }
       },
-      {
+     /* {
         type: 'number',
         name: 'managerID',
         message: 'What is the managers ID for this employee? (Required)',
@@ -254,7 +259,7 @@ const addEmployee = () => {
             return false;
           }
         }
-      }
+      }*/
     ])
 		.then((newEmployee) => {
 			let sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
@@ -262,7 +267,7 @@ const addEmployee = () => {
 			connection.query(sql, [newEmployee.firstName, newEmployee.lastName, newEmployee.roleID, newEmployee.managerID], (err, res) => {
 				if (err) throw err;
 				console.table(res);
-				viewEmployees();
+				viewEmployee();
 			});
 		});
 };
@@ -318,7 +323,7 @@ const updateRole = () => {
     connection.query(sql, [updateEmpRole.roleID, updateEmpRole.firstName, updateEmpRole.lastName], (err, res) => {
       if (err) throw err;
       console.table(res);
-      viewEmployees();
+      viewEmployee();
     });
   });
 };
