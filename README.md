@@ -1,10 +1,9 @@
 # Employee-DB
-# Employee-DB
   ![MIT](https://img.shields.io/badge/License-MIT-blue)
   * [Installation](#installation)
   * [Usage](#usage)
   * [Contributing](#contributing)
-  * [Test](#test)
+  * [Video](#video)
   * [Questions](#questions)
   * [License](#license)
   
@@ -15,8 +14,12 @@
   # Contributing
     Any updates made through node will result in updates to your mysql database. To view changes, login to your mysql and use commands to display and make changes to any updates completed.
 
-  # Video Example
+  # Video
   
+
+https://user-images.githubusercontent.com/83180774/133004609-e0154d9a-b7f2-421d-815b-866a191082ae.mp4
+
+
 
   # Questions
   *  You may  reach out to me directly at email@email.com for any questions.
