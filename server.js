@@ -1,7 +1,8 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
 // const db = require('./db/connection');
-const consoleTable = require('console.table');
+// From npm console.table site
+const cTable = require('console.table');
 // update routes
 //const apiRoutes = require('./routes/apiRoutes');
 
@@ -35,7 +36,7 @@ const questions =  () => {
             ]
         }])
         .then((userInput) => {
-            const { options } = userInput;
+            const {options} = userInput;
             // to view departments
             if (options === 'view departments') {
                 viewDepartment();
@@ -80,10 +81,10 @@ const viewDepartment = () => {
 // View Roles
 const viewRoles = () => {
     let sql = `SELECT role.id,
-                                                roles.title,
+                                                role.title,
                                                 department.name AS department
-                                                FROM roles
-                                                INNER JOIN department ON roles.department_id = department.id`;
+                                                FROM role
+                                                INNER JOIN department ON role.department_id = department.id`;
     connection.query(sql, (err, res) => {
         if (err) throw err;
         console.table(res);
@@ -96,12 +97,12 @@ const viewEmployee = () => {
     let sql = `SELECT employee.id,
                                                 employee.first_name,
                                                 employee.last_name,
-                                                roles.title,
+                                                role.title,
                                                 department.name AS department,
-                                                roles.salary,
+                                                role.salary,
                                                 CONCAT (manager.first_name, ' ', manager.last_name) AS manager
                                                 FROM employee
-                                                LEFT JOIN roles ON employee.role_id = roles.id
+                                                LEFT JOIN role ON employee.role_id = role.id
                                                 LEFT JOIN department ON role.department_id = department.id
                                                 LEFT JOIN employee manager ON employee.manager_id = manager.id
                                                 GROUP BY employee.id`;
@@ -256,7 +257,7 @@ const addEmployee = () => {
       }
     ])
 		.then((newEmployee) => {
-			let sql = `INSERT INTO employee (first_name, last_name, roles_id, manager_id) VALUES (?, ?, ?, ?)`;
+			let sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
 
 			connection.query(sql, [newEmployee.firstName, newEmployee.lastName, newEmployee.roleID, newEmployee.managerID], (err, res) => {
 				if (err) throw err;
@@ -312,7 +313,7 @@ const updateRole = () => {
       }
     }
   ]) .then((updateEmpRole) => {
-    let sql = `UPDATE employee SET roles_id = ? WHERE first_name = ? AND last_name = ?`;
+    let sql = `UPDATE employee SET role_id = ? WHERE first_name = ? AND last_name = ?`;
 
     connection.query(sql, [updateEmpRole.roleID, updateEmpRole.firstName, updateEmpRole.lastName], (err, res) => {
       if (err) throw err;
